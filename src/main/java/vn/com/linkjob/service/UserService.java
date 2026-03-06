@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.User;
 import vn.com.linkjob.dto.user.CreateUserRequestDTO;
+import vn.com.linkjob.dto.user.UpdateUserRequestDTO;
 import vn.com.linkjob.dto.user.UserResponseDTO;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
@@ -40,5 +41,12 @@ public class UserService {
         return userMapper.toUserResponseDTO(userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST))
         );
+    }
+
+    public UserResponseDTO updateUser(long id, UpdateUserRequestDTO request) {
+        User oldUser = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
+        userMapper.updateUser(oldUser, request);
+
+        return userMapper.toUserResponseDTO(userRepository.save(oldUser));
     }
 }

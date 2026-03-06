@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.dto.user.CreateUserRequestDTO;
+import vn.com.linkjob.dto.user.UpdateUserRequestDTO;
 import vn.com.linkjob.dto.user.UserResponseDTO;
 import vn.com.linkjob.service.UserService;
 
@@ -39,5 +40,13 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userService.getUserById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable long id,
+                                                       @RequestBody UpdateUserRequestDTO request) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.updateUser(id, request));
     }
 }
