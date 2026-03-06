@@ -18,6 +18,9 @@ public class UserService {
     UserMapper userMapper;
 
     public UserResponseDTO createUser(CreateUserRequestDTO request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new AppException(ErrorCode.EMAIL_EXISTED);
+        }
         User newUser = userMapper.toUser(request);
 
         return userMapper.toUserResponseDTO(userRepository.save(newUser));
