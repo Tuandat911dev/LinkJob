@@ -33,4 +33,11 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userService.getAllUser());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.getUserById(id));
+    }
 }

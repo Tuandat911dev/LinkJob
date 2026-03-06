@@ -13,7 +13,6 @@ import vn.com.linkjob.mapper.UserMapper;
 import vn.com.linkjob.repository.UserRepository;
 
 import java.util.List;
-import java.util.stream.Collector;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +34,11 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(userMapper::toUserResponseDTO)
                 .toList();
+    }
+
+    public UserResponseDTO getUserById(long id) {
+        return userMapper.toUserResponseDTO(userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST))
+        );
     }
 }
