@@ -1,4 +1,4 @@
-package vn.com.linkjob.dto;
+package vn.com.linkjob.dto.user;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

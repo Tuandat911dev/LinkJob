@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.User;
-import vn.com.linkjob.dto.CreateUserRequestDTO;
-import vn.com.linkjob.dto.UserResponseDTO;
+import vn.com.linkjob.dto.user.CreateUserRequestDTO;
+import vn.com.linkjob.dto.user.UserResponseDTO;
 import vn.com.linkjob.mapper.UserMapper;
 import vn.com.linkjob.repository.UserRepository;
 

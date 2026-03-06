@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.com.linkjob.dto.CreateUserRequestDTO;
-import vn.com.linkjob.dto.UserResponseDTO;
+import vn.com.linkjob.dto.user.CreateUserRequestDTO;
+import vn.com.linkjob.dto.user.UserResponseDTO;
 import vn.com.linkjob.service.UserService;
 
 @RestController

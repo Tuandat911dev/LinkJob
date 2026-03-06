@@ -3,9 +3,9 @@ package vn.com.linkjob.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import vn.com.linkjob.domain.User;
-import vn.com.linkjob.dto.CreateUserRequestDTO;
-import vn.com.linkjob.dto.UpdateUserRequestDTO;
-import vn.com.linkjob.dto.UserResponseDTO;
+import vn.com.linkjob.dto.user.CreateUserRequestDTO;
+import vn.com.linkjob.dto.user.UpdateUserRequestDTO;
+import vn.com.linkjob.dto.user.UserResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
