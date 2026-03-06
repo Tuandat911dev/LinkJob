@@ -49,4 +49,9 @@ public class UserService {
 
         return userMapper.toUserResponseDTO(userRepository.save(oldUser));
     }
+
+    public void deleteUser(long id) {
+        User deleteUser = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
+        userRepository.delete(deleteUser);
+    }
 }

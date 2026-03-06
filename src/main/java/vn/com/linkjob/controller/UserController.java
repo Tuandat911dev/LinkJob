@@ -49,4 +49,12 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userService.updateUser(id, request));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 }
