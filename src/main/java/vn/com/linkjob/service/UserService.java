@@ -3,6 +3,7 @@ package vn.com.linkjob.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.User;
 import vn.com.linkjob.dto.user.CreateUserRequestDTO;
@@ -21,12 +22,14 @@ import java.util.List;
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
     public UserResponseDTO createUser(CreateUserRequestDTO request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new AppException(ErrorCode.EMAIL_EXISTED);
         }
         User newUser = userMapper.toUser(request);
+        newUser.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return userMapper.toUserResponseDTO(userRepository.save(newUser));
     }
