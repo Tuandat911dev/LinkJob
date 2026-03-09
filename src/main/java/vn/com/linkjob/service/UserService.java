@@ -57,4 +57,10 @@ public class UserService {
         User deleteUser = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
         userRepository.delete(deleteUser);
     }
+
+    public User getUserForLogin(String username) {
+        return userRepository.findUserByEmail(username).orElseThrow(
+                () -> new AppException(ErrorCode.USER_NOT_EXIST)
+        );
+    }
 }
