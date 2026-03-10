@@ -12,22 +12,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vn.com.linkjob.dto.auth.LoginDTO;
+import vn.com.linkjob.dto.auth.LoginResponseDTO;
+import vn.com.linkjob.util.SecurityUtil;
 
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AuthController {
     AuthenticationManagerBuilder authenticationManagerBuilder;
+    SecurityUtil securityUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginDTO request) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO request) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = securityUtil.createToken(authentication);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(
+                LoginResponseDTO.builder()
+                        .token(jwt)
+                        .build()
+        );
     }
 }

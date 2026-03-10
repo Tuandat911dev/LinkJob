@@ -1,2 +1,8 @@
 server:
   port: ${SERVER_PORT:8080}
+
+# config jwt
+security:
+  jwt:
+    base64-secret: 9LUbF0LB8osQ5biiRtN2eQsoq9JlmNYwvxR6qphKviDYcFZ8I0rAgpYrK+kUGJ59a+7o7qZJxiRqgh4gaedopw==
+    token-validity-in-seconds: 86400 # 1 day
