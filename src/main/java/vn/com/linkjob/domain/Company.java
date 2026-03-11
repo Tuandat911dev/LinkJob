@@ -20,6 +20,8 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    String name;
+
     @Column(columnDefinition = "MEDIUMTEXT")
     String description;
 
