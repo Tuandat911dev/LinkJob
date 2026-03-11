@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                                 .jwt(Customizer.withDefaults())
                                 .authenticationEntryPoint(entryPoint)
                 )
+                .cors(Customizer.withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable);
 
         return http.build();
