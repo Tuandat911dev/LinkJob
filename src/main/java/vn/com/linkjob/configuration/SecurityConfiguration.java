@@ -34,13 +34,9 @@ public class SecurityConfiguration {
                 .oauth2ResourceServer((oauth2) ->
                         oauth2
                                 .jwt(Customizer.withDefaults())
+                                .authenticationEntryPoint(entryPoint)
                 )
-                .formLogin(AbstractHttpConfigurer::disable)
-
-                .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(entryPoint)
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                );
+                .formLogin(AbstractHttpConfigurer::disable);
 
         return http.build();
     }

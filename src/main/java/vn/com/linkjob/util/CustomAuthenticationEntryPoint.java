@@ -27,13 +27,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-        this.delegate.commence(request, response, authException);
         response.setContentType("application/json;charset=UTF-8");
 
         RestResponse<Object> res = RestResponse.builder()
                 .statusCode(HttpStatus.UNAUTHORIZED.value())
                 .error(authException.getMessage())
-                .message("Access token invalid")
+                .message("This feature need login")
                 .build();
 
         mapper.writeValue(response.getWriter(), res);

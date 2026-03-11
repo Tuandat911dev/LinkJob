@@ -5,6 +5,7 @@ import com.nimbusds.jose.util.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -44,7 +45,7 @@ public class JwtConfiguration {
                 return jwtDecoder.decode(token);
             } catch (Exception e) {
                 System.out.println(">>> JWT error: " + e.getMessage());
-                throw e;
+                throw new BadCredentialsException("Invalid or expired token", e);
             }
         };
     }
