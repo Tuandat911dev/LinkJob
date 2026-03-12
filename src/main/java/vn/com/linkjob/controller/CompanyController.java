@@ -33,4 +33,12 @@ public class CompanyController {
                 .status(HttpStatus.OK)
                 .body(companyService.getAllCompanies());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CompanyResponseDTO> updateCompany(@PathVariable long id,
+                                                            @RequestBody CompanyRequestDTO request) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(companyService.updateCompany(id, request));
+    }
 }
