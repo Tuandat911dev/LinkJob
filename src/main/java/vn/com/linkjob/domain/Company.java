@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.Instant;
-
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "companies")
@@ -14,7 +12,7 @@ import java.time.Instant;
 @Builder
 @Getter
 @Setter
-public class Company {
+public class Company extends Auditable {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
@@ -27,12 +25,4 @@ public class Company {
     String address;
 
     String logo;
-
-    Instant createdAt;
-
-    Instant updatedAt;
-
-    String createdBy;
-
-    String updatedBy;
 }
