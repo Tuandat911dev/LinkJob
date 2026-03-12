@@ -3,10 +3,14 @@ package vn.com.linkjob.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
+import vn.com.linkjob.dto.paginate.Meta;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
 import vn.com.linkjob.mapper.CompanyMapper;
@@ -48,5 +52,23 @@ public class CompanyService {
         );
 
         companyRepository.delete(company);
+    }
+
+    public ResultPaginationDTO getCompaniesWithPaginate(int current, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(current - 1, pageSize);
+        Page<Company> companies = companyRepository.findAll(pageRequest);
+        List<CompanyResponseDTO> result = companies.getContent().stream()
+                .map(companyMapper::toCompanyResponseDTO)
+                .toList();
+
+        return ResultPaginationDTO.builder()
+                .meta(Meta.builder()
+                        .pageSize(companies.getSize())
+                        .page(companies.getNumber() + 1)
+                        .total(companies.getTotalElements())
+                        .pages(companies.getTotalPages())
+                        .build())
+                .result(result)
+                .build();
     }
 }

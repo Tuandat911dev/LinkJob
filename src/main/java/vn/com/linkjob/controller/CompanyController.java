@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.service.CompanyService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/companies")
@@ -27,12 +29,12 @@ public class CompanyController {
                 .body(companyService.createCompany(request));
     }
 
-    @GetMapping
-    public ResponseEntity<List<CompanyResponseDTO>> getAllCompanies() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(companyService.getAllCompanies());
-    }
+//    @GetMapping
+//    public ResponseEntity<List<CompanyResponseDTO>> getAllCompanies() {
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(companyService.getAllCompanies());
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<CompanyResponseDTO> updateCompany(@PathVariable long id,
@@ -49,5 +51,26 @@ public class CompanyController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @GetMapping
+    public ResponseEntity<ResultPaginationDTO> getCompaniesWithPagination(@RequestParam("current") Optional<String> currentOpt,
+                                                                          @RequestParam("pageSize") Optional<String> pageSizeOpt) {
+        int current = 1;
+        int pageSize = 10;
+        try {
+            if (currentOpt.isPresent()) {
+                current = Integer.parseInt(currentOpt.get());
+            }
+
+            if (pageSizeOpt.isPresent()) {
+                pageSize = Integer.parseInt(pageSizeOpt.get());
+            }
+        } catch (Exception ignore) {
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(companyService.getCompaniesWithPaginate(current, pageSize));
     }
 }
