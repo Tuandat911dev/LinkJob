@@ -35,13 +35,16 @@ public class FormatRestResponse implements ResponseBodyAdvice<Object> {
         int status = servletResponse.getStatus();
         RestResponse<Object> restResponse = null;
         if (status >= 400) {
-            restResponse = RestResponse.builder()
-                    .status("failed")
-                    .error(((RestResponse<?>) body).getError())
-                    .statusCode(status)
-                    .message("CALL_API_FAILED")
-                    .build();
-
+            if (body instanceof RestResponse<?>) {
+                restResponse = RestResponse.builder()
+                        .status("failed")
+                        .error(((RestResponse<?>) body).getError())
+                        .statusCode(status)
+                        .message("CALL_API_FAILED")
+                        .build();
+            } else {
+                return body;
+            }
         } else {
             ApiMessage message = returnType.getMethodAnnotation(ApiMessage.class);
             restResponse = RestResponse.builder()
