@@ -10,6 +10,8 @@ import vn.com.linkjob.dto.company.CompanyResponseDTO;
 import vn.com.linkjob.mapper.CompanyMapper;
 import vn.com.linkjob.repository.CompanyRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -21,5 +23,11 @@ public class CompanyService {
         Company newCompany = companyRepository.save(companyMapper.toCompany(request));
 
         return companyMapper.toCompanyResponseDTO(newCompany);
+    }
+
+    public List<CompanyResponseDTO> getAllCompanies() {
+        return companyRepository.findAll().stream()
+                .map(companyMapper::toCompanyResponseDTO)
+                .toList();
     }
 }
