@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
 import vn.com.linkjob.service.CompanyService;
+import vn.com.linkjob.service.UserService;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyController {
     CompanyService companyService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<CompanyResponseDTO> createNewCompany(@RequestBody @Valid CompanyRequestDTO request) {
@@ -40,5 +42,14 @@ public class CompanyController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(companyService.updateCompany(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCompany(@PathVariable long id) {
+        userService.deleteUser(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 }

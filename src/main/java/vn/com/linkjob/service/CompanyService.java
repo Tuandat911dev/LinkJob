@@ -41,4 +41,12 @@ public class CompanyService {
 
         return companyMapper.toCompanyResponseDTO(companyRepository.save(company));
     }
+
+    public void deleteCompany(long id) {
+        Company company = companyRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.COMPANY_NOT_EXIST)
+        );
+
+        companyRepository.delete(company);
+    }
 }
