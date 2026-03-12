@@ -1,19 +1,20 @@
 package vn.com.linkjob.controller;
 
+import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
 import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.service.CompanyService;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/companies")
@@ -54,23 +55,10 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<ResultPaginationDTO> getCompaniesWithPagination(@RequestParam("current") Optional<String> currentOpt,
-                                                                          @RequestParam("pageSize") Optional<String> pageSizeOpt) {
-        int current = 1;
-        int pageSize = 10;
-        try {
-            if (currentOpt.isPresent()) {
-                current = Integer.parseInt(currentOpt.get());
-            }
-
-            if (pageSizeOpt.isPresent()) {
-                pageSize = Integer.parseInt(pageSizeOpt.get());
-            }
-        } catch (Exception ignore) {
-        }
-
+    public ResponseEntity<ResultPaginationDTO> getCompaniesWithPagination(Pageable pageable,
+                                                                          @Filter Specification<Company> spec) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(companyService.getCompaniesWithPaginate(current, pageSize));
+                .body(companyService.getCompaniesWithPaginate(pageable, spec));
     }
 }

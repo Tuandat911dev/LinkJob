@@ -4,7 +4,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
@@ -54,9 +55,8 @@ public class CompanyService {
         companyRepository.delete(company);
     }
 
-    public ResultPaginationDTO getCompaniesWithPaginate(int current, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(current - 1, pageSize);
-        Page<Company> companies = companyRepository.findAll(pageRequest);
+    public ResultPaginationDTO getCompaniesWithPaginate(Pageable pageable, Specification<Company> spec) {
+        Page<Company> companies = companyRepository.findAll(spec, pageable);
         List<CompanyResponseDTO> result = companies.getContent().stream()
                 .map(companyMapper::toCompanyResponseDTO)
                 .toList();

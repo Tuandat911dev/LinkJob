@@ -38,6 +38,8 @@ dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:1.5.1.Final"
     testAnnotationProcessor "org.mapstruct:mapstruct- processor:1.5.1.Final"
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+    implementation("com.turkraft.springfilter:jpa:3.2.5")
 }
 
 tasks.named('test') {
