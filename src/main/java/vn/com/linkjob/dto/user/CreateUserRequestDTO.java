@@ -1,10 +1,12 @@
 package vn.com.linkjob.dto.user;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import vn.com.linkjob.util.enums.GenderEnum;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -20,9 +22,15 @@ public class CreateUserRequestDTO {
     String email;
 
     @NotBlank(message = "Password không được để trống")
-    @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$",
-            message = "Password phải chứa ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt"
-    )
+//    @Pattern(
+//            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$",
+//            message = "Password phải chứa ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt"
+//    )
     String password;
+
+    GenderEnum gender;
+
+    int age;
+
+    String address;
 }

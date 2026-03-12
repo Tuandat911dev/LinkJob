@@ -14,6 +14,7 @@ public enum ErrorCode {
     // user
     EMAIL_EXISTED("EMAIL_EXISTED", "Email đã tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
     USER_NOT_EXIST("USER_NOT_EXIST", "Người dùng không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
+    GENDER_INVALID("GENDER_INVALID", "Giới tính không hợp lệ", HttpStatus.BAD_REQUEST),
 
     // company
     COMPANY_NOT_EXIST("COMPANY_NOT_EXIST", "Công ty không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
