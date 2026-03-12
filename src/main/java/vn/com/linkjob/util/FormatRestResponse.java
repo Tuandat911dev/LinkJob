@@ -12,6 +12,7 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import vn.com.linkjob.dto.api.RestResponse;
+import vn.com.linkjob.util.annotation.ApiMessage;
 
 @RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE)
@@ -42,11 +43,12 @@ public class FormatRestResponse implements ResponseBodyAdvice<Object> {
                     .build();
 
         } else {
+            ApiMessage message = returnType.getMethodAnnotation(ApiMessage.class);
             restResponse = RestResponse.builder()
                     .status("success")
                     .statusCode(status)
                     .data(body)
-                    .message("CALL_API_SUCCESS")
+                    .message(message != null ? message.value() : "CALL_API_SUCCESS")
                     .build();
         }
 
