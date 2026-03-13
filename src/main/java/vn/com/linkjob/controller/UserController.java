@@ -11,6 +11,7 @@ import vn.com.linkjob.dto.user.CreateUserRequestDTO;
 import vn.com.linkjob.dto.user.UpdateUserRequestDTO;
 import vn.com.linkjob.dto.user.UserResponseDTO;
 import vn.com.linkjob.service.UserService;
+import vn.com.linkjob.util.annotation.ApiMessage;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping
+    @ApiMessage("Create new user")
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody CreateUserRequestDTO request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -29,6 +31,7 @@ public class UserController {
     }
 
     @GetMapping
+    @ApiMessage("Get user with pagination, sort, filter")
     public ResponseEntity<List<UserResponseDTO>> getAllUser() {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -36,6 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @ApiMessage("Get user by id")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -43,7 +47,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable long id,
+    @ApiMessage("Edit user")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable long id,
                                                        @RequestBody UpdateUserRequestDTO request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -51,6 +56,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiMessage("Delete user")
     public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
         return ResponseEntity
