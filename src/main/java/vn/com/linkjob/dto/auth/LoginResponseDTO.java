@@ -10,5 +10,18 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponseDTO {
-    String token;
+    String accessToken;
+    UserLogin user;
+
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserLogin {
+        String email;
+        String name;
+        long id;
+    }
 }

@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vn.com.linkjob.domain.User;
 import vn.com.linkjob.dto.auth.LoginDTO;
 import vn.com.linkjob.dto.auth.LoginResponseDTO;
+import vn.com.linkjob.service.UserService;
 import vn.com.linkjob.util.SecurityUtil;
 
 @RestController
@@ -23,6 +25,7 @@ import vn.com.linkjob.util.SecurityUtil;
 public class AuthController {
     AuthenticationManagerBuilder authenticationManagerBuilder;
     SecurityUtil securityUtil;
+    UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO request) {
@@ -33,10 +36,16 @@ public class AuthController {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = securityUtil.createToken(authentication);
+        User currentUser = userService.getUserForLogin(request.getUsername());
 
         return ResponseEntity.ok().body(
                 LoginResponseDTO.builder()
-                        .token(jwt)
+                        .accessToken(jwt)
+                        .user(LoginResponseDTO.UserLogin.builder()
+                                .email(currentUser.getEmail())
+                                .name(currentUser.getName())
+                                .id(currentUser.getId())
+                                .build())
                         .build()
         );
     }
