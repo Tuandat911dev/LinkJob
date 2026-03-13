@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatusCode;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum ErrorCode {
+    // system
+    RESOURCE_NOT_FOUND("RESOURCE_NOT_FOUND", "Tài nguyên không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
+
     // user
     EMAIL_EXISTED("EMAIL_EXISTED", "Email đã tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
     USER_NOT_EXIST("USER_NOT_EXIST", "Người dùng không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),

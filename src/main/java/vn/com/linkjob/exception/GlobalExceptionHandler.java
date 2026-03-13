@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import vn.com.linkjob.dto.api.RestResponse;
 
 import java.util.List;
@@ -32,6 +33,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<RestResponse<Object>> handleAppException(AppException ex) {
         RestResponse<Object> response = RestResponse.builder()
                 .error(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<RestResponse<Object>> handleNoResourceFoundException(NoResourceFoundException ex) {
+        RestResponse<Object> response = RestResponse.builder()
+                .message(ErrorCode.RESOURCE_NOT_FOUND.getMessage())
+                .error(ErrorCode.RESOURCE_NOT_FOUND.getCode())
+                .statusCode(ErrorCode.RESOURCE_NOT_FOUND.getStatusCode().value())
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

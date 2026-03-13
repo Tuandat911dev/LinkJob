@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import vn.com.linkjob.dto.api.RestResponse;
 import vn.com.linkjob.util.annotation.ApiMessage;
 
+import java.util.Optional;
+
 @RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class FormatRestResponse implements ResponseBodyAdvice<Object> {
@@ -40,7 +42,7 @@ public class FormatRestResponse implements ResponseBodyAdvice<Object> {
                         .status("failed")
                         .error(((RestResponse<?>) body).getError())
                         .statusCode(status)
-                        .message("CALL_API_FAILED")
+                        .message(Optional.ofNullable(((RestResponse<?>) body).getMessage()).orElse("CALL_API_FAILED"))
                         .build();
             } else {
                 return body;
