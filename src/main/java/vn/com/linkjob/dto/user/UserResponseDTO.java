@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.com.linkjob.util.enums.GenderEnum;
 
+import java.time.Instant;
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
@@ -17,4 +19,8 @@ public class UserResponseDTO {
     GenderEnum gender;
     int age;
     String address;
+    Instant createdAt;
+    Instant updatedAt;
+    String createdBy;
+    String updatedBy;
 }
