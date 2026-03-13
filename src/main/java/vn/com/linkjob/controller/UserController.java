@@ -1,19 +1,22 @@
 package vn.com.linkjob.controller;
 
+import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.com.linkjob.domain.User;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.dto.user.CreateUserRequestDTO;
 import vn.com.linkjob.dto.user.UpdateUserRequestDTO;
 import vn.com.linkjob.dto.user.UserResponseDTO;
 import vn.com.linkjob.service.UserService;
 import vn.com.linkjob.util.annotation.ApiMessage;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -32,10 +35,11 @@ public class UserController {
 
     @GetMapping
     @ApiMessage("Get user with pagination, sort, filter")
-    public ResponseEntity<List<UserResponseDTO>> getAllUser() {
+    public ResponseEntity<ResultPaginationDTO> getAllUser(Pageable pageable,
+                                                          @Filter Specification<User> spec) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(userService.getAllUser());
+                .body(userService.getAllUser(pageable, spec));
     }
 
     @GetMapping("/{id}")
@@ -49,7 +53,7 @@ public class UserController {
     @PutMapping("/{id}")
     @ApiMessage("Edit user")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable long id,
-                                                       @RequestBody UpdateUserRequestDTO request) {
+                                                      @RequestBody UpdateUserRequestDTO request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userService.updateUser(id, request));

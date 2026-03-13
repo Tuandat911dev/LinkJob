@@ -3,9 +3,14 @@ package vn.com.linkjob.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.User;
+import vn.com.linkjob.dto.paginate.Meta;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.dto.user.CreateUserRequestDTO;
 import vn.com.linkjob.dto.user.UpdateUserRequestDTO;
 import vn.com.linkjob.dto.user.UserResponseDTO;
@@ -34,10 +39,21 @@ public class UserService {
         return userMapper.toUserResponseDTO(userRepository.save(newUser));
     }
 
-    public List<UserResponseDTO> getAllUser() {
-        return userRepository.findAll().stream()
+    public ResultPaginationDTO getAllUser(Pageable pageable, Specification<User> spec) {
+        Page<User> userPages = userRepository.findAll(spec, pageable);
+        List<UserResponseDTO> result = userPages.getContent().stream()
                 .map(userMapper::toUserResponseDTO)
                 .toList();
+
+        return ResultPaginationDTO.builder()
+                .meta(Meta.builder()
+                        .pageSize(userPages.getSize())
+                        .page(userPages.getNumber() + 1)
+                        .total(userPages.getTotalElements())
+                        .pages(userPages.getTotalPages())
+                        .build())
+                .result(result)
+                .build();
     }
 
     public UserResponseDTO getUserById(long id) {
