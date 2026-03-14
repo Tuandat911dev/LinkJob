@@ -24,5 +24,6 @@ public class User extends Auditable {
     GenderEnum gender;
     int age;
     String address;
+    @Column(columnDefinition = "MEDIUMTEXT")
     String refreshToken;
 }
