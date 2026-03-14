@@ -11,4 +11,5 @@ spring:
 security:
   jwt:
     base64-secret: 9LUbF0LB8osQ5biiRtN2eQsoq9JlmNYwvxR6qphKviDYcFZ8I0rAgpYrK+kUGJ59a+7o7qZJxiRqgh4gaedopw==
-    token-validity-in-seconds: 86400 # 1 day
+    access-token-validity-in-seconds: 86400 # 1 day
+    refresh-token-validity-in-seconds: 8640000 # 100 days
