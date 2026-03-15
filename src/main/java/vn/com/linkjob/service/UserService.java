@@ -79,4 +79,11 @@ public class UserService {
                 () -> new AppException(ErrorCode.USER_NOT_EXIST)
         );
     }
+
+    public void updateRefreshToken(String email, String refreshToken) {
+        User currentUser = getUserForLogin(email);
+        currentUser.setRefreshToken(refreshToken);
+
+        userRepository.save(currentUser);
+    }
 }
