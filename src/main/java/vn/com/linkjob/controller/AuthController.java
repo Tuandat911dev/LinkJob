@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.domain.User;
+import vn.com.linkjob.dto.auth.AccountDTO;
 import vn.com.linkjob.dto.auth.LoginDTO;
 import vn.com.linkjob.dto.auth.LoginResponseDTO;
 import vn.com.linkjob.exception.AppException;
@@ -65,20 +66,22 @@ public class AuthController {
 
     @GetMapping("/account")
     @ApiMessage("Fetch user info")
-    public ResponseEntity<LoginResponseDTO.UserLogin> fetchUserLogin() {
+    public ResponseEntity<AccountDTO> fetchUserLogin() {
         String currentEmail = SecurityUtil.getCurrentUserLogin().orElseThrow(
                 () -> new AppException(ErrorCode.UN_AUTHENTICATED)
         );
 
         User currentUser = userService.getUserForLogin(currentEmail);
-        LoginResponseDTO.UserLogin userLogin = LoginResponseDTO.UserLogin.builder()
+        AccountDTO.UserLogin userLogin = AccountDTO.UserLogin.builder()
                 .email(currentUser.getEmail())
                 .name(currentUser.getName())
                 .id(currentUser.getId())
                 .build();
 
         return ResponseEntity.ok()
-                .body(userLogin);
+                .body(AccountDTO.builder()
+                        .user(userLogin)
+                        .build());
     }
 
     @GetMapping("/refresh")
