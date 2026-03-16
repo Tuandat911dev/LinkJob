@@ -17,6 +17,7 @@ public enum ErrorCode {
     // auth
     UN_AUTHENTICATED("UN_AUTHENTICATED", "Bạn cần đăng nhập để thực hiện chức năng này", HttpStatus.UNAUTHORIZED),
     UN_AUTHORIZED("UN_AUTHORIZED", "Bạn không có quyền truy cập tài nguyên này", HttpStatus.FORBIDDEN),
+    REFRESH_TOKEN_INVALID("REFRESH_TOKEN_INVALID", "Refresh token không hợp lệ", HttpStatus.BAD_REQUEST),
 
     // user
     EMAIL_EXISTED("EMAIL_EXISTED", "Email đã tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),

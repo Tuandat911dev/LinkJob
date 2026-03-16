@@ -86,4 +86,10 @@ public class UserService {
 
         userRepository.save(currentUser);
     }
+
+    public User getUserByEmailAndRefreshToken(String email, String refreshToken) {
+        return userRepository.findUserByEmailAndRefreshToken(email, refreshToken).orElseThrow(
+                () -> new AppException(ErrorCode.REFRESH_TOKEN_INVALID)
+        );
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.domain.User;
 import vn.com.linkjob.dto.auth.LoginDTO;
@@ -44,7 +45,7 @@ public class AuthController {
                 .id(currentUser.getId())
                 .build();
 
-        String jwt = securityUtil.createAccessToken(authentication, userLogin);
+        String jwt = securityUtil.createAccessToken(authentication.getName(), userLogin);
 
         String refreshToken = securityUtil.createRefreshToken(
                 currentUser.getEmail(),
@@ -80,4 +81,27 @@ public class AuthController {
                 .body(userLogin);
     }
 
+    @GetMapping("/refresh")
+    @ApiMessage("Re-new access token")
+    public ResponseEntity<LoginResponseDTO> reNewAccessToken(
+            @CookieValue(name = "refresh-token", defaultValue = "default-token") String refresh_token
+    ) {
+        Jwt decodedToken = securityUtil.verifyMyToken(refresh_token);
+        String email = decodedToken.getSubject();
+        User currentUser = userService.getUserByEmailAndRefreshToken(email, refresh_token);
+        LoginResponseDTO.UserLogin userLogin = LoginResponseDTO.UserLogin.builder()
+                .email(currentUser.getEmail())
+                .name(currentUser.getName())
+                .id(currentUser.getId())
+                .build();
+
+        String jwt = securityUtil.createAccessToken(email, userLogin);
+
+        return ResponseEntity
+                .ok()
+                .body(LoginResponseDTO.builder()
+                        .accessToken(jwt)
+                        .user(userLogin)
+                        .build());
+    }
 }

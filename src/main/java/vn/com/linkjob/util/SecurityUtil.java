@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.dto.auth.LoginResponseDTO;
+import vn.com.linkjob.exception.AppException;
+import vn.com.linkjob.exception.ErrorCode;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -20,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SecurityUtil {
     private final JwtEncoder jwtEncoder;
+    private final JwtDecoder jwtDecoder;
 
     @Value("${security.jwt.base64-secret}")
     private String jwtKey;
@@ -55,14 +58,14 @@ public class SecurityUtil {
         return null;
     }
 
-    public String createAccessToken(Authentication authentication, LoginResponseDTO.UserLogin userLogin) {
+    public String createAccessToken(String email, LoginResponseDTO.UserLogin userLogin) {
         Instant now = Instant.now();
         Instant validity = now.plus(this.accessTokenExpiration, ChronoUnit.SECONDS);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuedAt(now)
                 .expiresAt(validity)
-                .subject(authentication.getName())
+                .subject(email)
                 .claim("user", userLogin)
                 .build();
 
@@ -93,5 +96,13 @@ public class SecurityUtil {
                 .path("/")
                 .maxAge(refreshTokenExpiration)
                 .build();
+    }
+
+    public Jwt verifyMyToken(String token) {
+        try {
+            return jwtDecoder.decode(token);
+        } catch (Exception e) {
+            throw new AppException(ErrorCode.REFRESH_TOKEN_INVALID);
+        }
     }
 }
