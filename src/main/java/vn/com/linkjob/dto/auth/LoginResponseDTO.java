@@ -1,5 +1,6 @@
 package vn.com.linkjob.dto.auth;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponseDTO {
+    @JsonProperty("access_token")
     String accessToken;
     UserLogin user;
 
