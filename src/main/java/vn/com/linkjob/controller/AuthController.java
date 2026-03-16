@@ -104,4 +104,19 @@ public class AuthController {
                         .user(userLogin)
                         .build());
     }
+
+    @GetMapping("/logout")
+    @ApiMessage("Logout")
+    public ResponseEntity<Void> logout(
+            @CookieValue(name = "refresh-token", defaultValue = "default-token") String refresh_token
+    ) {
+        Jwt decodedToken = securityUtil.verifyMyToken(refresh_token);
+        String email = decodedToken.getSubject();
+        userService.updateRefreshToken(email, null);
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.SET_COOKIE, securityUtil.deleteCookie().toString())
+                .build();
+    }
 }

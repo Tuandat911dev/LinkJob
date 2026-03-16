@@ -98,6 +98,11 @@ public class SecurityUtil {
                 .build();
     }
 
+    public ResponseCookie deleteCookie() {
+        return ResponseCookie.from("refresh-token", null)
+                .build();
+    }
+
     public Jwt verifyMyToken(String token) {
         try {
             return jwtDecoder.decode(token);
