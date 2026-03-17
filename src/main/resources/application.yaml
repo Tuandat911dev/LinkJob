@@ -6,6 +6,9 @@ spring:
     web:
       pageable:
         one-indexed-parameters: true
+    redis:
+      host: localhost
+      port: 6379
 
 # config jwt
 security:
