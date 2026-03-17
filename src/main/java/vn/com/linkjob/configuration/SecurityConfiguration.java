@@ -11,8 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import vn.com.linkjob.util.CustomAuthenticationEntryPoint;
+import vn.com.linkjob.util.JwtBlackListFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,13 +25,16 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationEntryPoint entryPoint) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                            CustomAuthenticationEntryPoint entryPoint,
+                                            JwtBlackListFilter jwtBlackListFilter) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
+                .addFilterBefore(jwtBlackListFilter, BearerTokenAuthenticationFilter.class)
                 .oauth2ResourceServer((oauth2) ->
                         oauth2
                                 .jwt(Customizer.withDefaults())

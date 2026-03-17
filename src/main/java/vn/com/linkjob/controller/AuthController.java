@@ -1,8 +1,10 @@
 package vn.com.linkjob.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
+import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.domain.User;
 import vn.com.linkjob.dto.auth.AccountDTO;
@@ -21,6 +25,8 @@ import vn.com.linkjob.service.UserService;
 import vn.com.linkjob.util.SecurityUtil;
 import vn.com.linkjob.util.annotation.ApiMessage;
 
+import java.util.concurrent.TimeUnit;
+
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -29,6 +35,8 @@ public class AuthController {
     AuthenticationManagerBuilder authenticationManagerBuilder;
     SecurityUtil securityUtil;
     UserService userService;
+    RedisTemplate<String, String> redisTemplate;
+    private final BearerTokenResolver bearerTokenResolver = new DefaultBearerTokenResolver();
 
     @PostMapping("/login")
     @ApiMessage("Login account")
@@ -111,11 +119,24 @@ public class AuthController {
     @GetMapping("/logout")
     @ApiMessage("Logout")
     public ResponseEntity<Void> logout(
+            HttpServletRequest request,
             @CookieValue(name = "refresh-token", defaultValue = "default-token") String refresh_token
     ) {
         Jwt decodedToken = securityUtil.verifyMyToken(refresh_token);
+        Jwt accessToken = securityUtil.verifyMyToken(bearerTokenResolver.resolve(request));
         String email = decodedToken.getSubject();
         userService.updateRefreshToken(email, null);
+
+        String blackListKey = "blacklist:" + accessToken.getTokenValue();
+        if (accessToken.getExpiresAt() != null) {
+            long expirationTime = accessToken.getExpiresAt().toEpochMilli();
+            long currentTime = System.currentTimeMillis();
+            long ttl = expirationTime - currentTime;
+
+            if (ttl > 0) {
+                redisTemplate.opsForValue().set(blackListKey, "true", ttl, TimeUnit.MILLISECONDS);
+            }
+        }
 
         return ResponseEntity
                 .ok()
