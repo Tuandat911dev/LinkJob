@@ -26,4 +26,8 @@ public class User extends Auditable {
     String address;
     @Column(columnDefinition = "MEDIUMTEXT")
     String refreshToken;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    Company company;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "companies")
@@ -25,4 +27,10 @@ public class Company extends Auditable {
     String address;
 
     String logo;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "company",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    List<User> users;
 }
