@@ -35,8 +35,10 @@ public class UserService {
             throw new AppException(ErrorCode.EMAIL_EXISTED);
         }
         User newUser = userMapper.toUser(request);
-        Company company = companyService.getCompanyById(request.getCompany().getId());
-        newUser.setCompany(company);
+        if (request.getCompany() != null) {
+            Company company = companyService.getCompanyById(request.getCompany().getId());
+            newUser.setCompany(company);
+        }
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return userMapper.toUserResponseDTO(userRepository.save(newUser));
@@ -68,8 +70,10 @@ public class UserService {
     public UserResponseDTO updateUser(long id, UpdateUserRequestDTO request) {
         User oldUser = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
         userMapper.updateUser(oldUser, request);
-        Company company = companyService.getCompanyById(request.getCompany().getId());
-        oldUser.setCompany(company);
+        if(request.getCompany() != null) {
+            Company company = companyService.getCompanyById(request.getCompany().getId());
+            oldUser.setCompany(company);
+        }
 
         return userMapper.toUserResponseDTO(userRepository.save(oldUser));
     }
