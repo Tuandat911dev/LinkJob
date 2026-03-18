@@ -9,7 +9,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.User;
-import vn.com.linkjob.dto.paginate.Meta;
 import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.dto.user.CreateUserRequestDTO;
 import vn.com.linkjob.dto.user.UpdateUserRequestDTO;
@@ -46,7 +45,7 @@ public class UserService {
                 .toList();
 
         return ResultPaginationDTO.builder()
-                .meta(Meta.builder()
+                .meta(ResultPaginationDTO.Meta.builder()
                         .pageSize(userPages.getSize())
                         .page(userPages.getNumber() + 1)
                         .total(userPages.getTotalElements())

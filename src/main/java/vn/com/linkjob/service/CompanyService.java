@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
-import vn.com.linkjob.dto.paginate.Meta;
 import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
@@ -30,12 +29,6 @@ public class CompanyService {
         Company newCompany = companyRepository.save(companyMapper.toCompany(request));
 
         return companyMapper.toCompanyResponseDTO(newCompany);
-    }
-
-    public List<CompanyResponseDTO> getAllCompanies() {
-        return companyRepository.findAll().stream()
-                .map(companyMapper::toCompanyResponseDTO)
-                .toList();
     }
 
     public CompanyResponseDTO updateCompany(long id, CompanyRequestDTO request) {
@@ -62,7 +55,7 @@ public class CompanyService {
                 .toList();
 
         return ResultPaginationDTO.builder()
-                .meta(Meta.builder()
+                .meta(ResultPaginationDTO.Meta.builder()
                         .pageSize(companies.getSize())
                         .page(companies.getNumber() + 1)
                         .total(companies.getTotalElements())

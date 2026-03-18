@@ -12,4 +12,17 @@ import lombok.experimental.FieldDefaults;
 public class ResultPaginationDTO {
     Meta meta;
     Object result;
+
+    @Getter
+    @Setter
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Meta {
+        int page;
+        int pageSize;
+        int pages;
+        long total;
+    }
 }
