@@ -1,5 +1,6 @@
 package vn.com.linkjob.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -32,5 +33,6 @@ public class Company extends Auditable {
             mappedBy = "company",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonIgnore
     List<User> users;
 }
