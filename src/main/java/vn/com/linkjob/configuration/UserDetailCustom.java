@@ -1,4 +1,4 @@
-package vn.com.linkjob.service;
+package vn.com.linkjob.configuration;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import vn.com.linkjob.domain.User;
+import vn.com.linkjob.service.UserService;
 
 import java.util.Collections;
 
