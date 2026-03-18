@@ -25,6 +25,12 @@ public class CompanyService {
     CompanyRepository companyRepository;
     CompanyMapper companyMapper;
 
+    public Company getCompanyById(long id) {
+        return companyRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.COMPANY_NOT_EXIST)
+        );
+    }
+
     public CompanyResponseDTO createCompany(CompanyRequestDTO request) {
         Company newCompany = companyRepository.save(companyMapper.toCompany(request));
 

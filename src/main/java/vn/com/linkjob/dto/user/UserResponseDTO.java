@@ -19,8 +19,20 @@ public class UserResponseDTO {
     GenderEnum gender;
     int age;
     String address;
+    CompanyUserResponse company;
     Instant createdAt;
     Instant updatedAt;
     String createdBy;
     String updatedBy;
+
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CompanyUserResponse {
+        long id;
+        String name;
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.domain.User;
 import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.dto.user.CreateUserRequestDTO;
@@ -25,6 +26,7 @@ import java.util.List;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class UserService {
     UserRepository userRepository;
+    CompanyService companyService;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
@@ -33,6 +35,8 @@ public class UserService {
             throw new AppException(ErrorCode.EMAIL_EXISTED);
         }
         User newUser = userMapper.toUser(request);
+        Company company = companyService.getCompanyById(request.getCompany().getId());
+        newUser.setCompany(company);
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return userMapper.toUserResponseDTO(userRepository.save(newUser));
@@ -64,6 +68,8 @@ public class UserService {
     public UserResponseDTO updateUser(long id, UpdateUserRequestDTO request) {
         User oldUser = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
         userMapper.updateUser(oldUser, request);
+        Company company = companyService.getCompanyById(request.getCompany().getId());
+        oldUser.setCompany(company);
 
         return userMapper.toUserResponseDTO(userRepository.save(oldUser));
     }

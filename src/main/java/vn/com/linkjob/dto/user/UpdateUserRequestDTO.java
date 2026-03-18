@@ -15,4 +15,15 @@ public class UpdateUserRequestDTO {
     GenderEnum gender;
     int age;
     String address;
+    CompanyUpdateUserRequest company;
+
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CompanyUpdateUserRequest {
+        long id;
+    }
 }

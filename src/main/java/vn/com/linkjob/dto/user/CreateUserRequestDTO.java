@@ -33,4 +33,16 @@ public class CreateUserRequestDTO {
     int age;
 
     String address;
+
+    CompanyCreateUserRequest company;
+
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CompanyCreateUserRequest {
+        long id;
+    }
 }
