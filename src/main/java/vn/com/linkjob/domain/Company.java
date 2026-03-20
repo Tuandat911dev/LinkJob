@@ -35,4 +35,11 @@ public class Company extends Auditable {
             orphanRemoval = true)
     @JsonIgnore
     List<User> users;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "company",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnore
+    List<Job> jobs;
 }
