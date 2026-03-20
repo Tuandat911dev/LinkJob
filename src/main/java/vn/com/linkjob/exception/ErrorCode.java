@@ -28,7 +28,12 @@ public enum ErrorCode {
     COMPANY_NOT_EXIST("COMPANY_NOT_EXIST", "Công ty không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
 
     // job
-    JOB_LEVEL_INVALID("JOB_LEVEL_INVALID", "Level công việc không hợp lệ", HttpStatus.BAD_REQUEST)
+    JOB_LEVEL_INVALID("JOB_LEVEL_INVALID", "Level công việc không hợp lệ", HttpStatus.BAD_REQUEST),
+
+    // skill
+    SKILL_EXISTED("SKILL_EXISTED", "Kỹ năng đã tồn tại trong hệ thống, vui lòng chọn kỹ năng có sẵn",
+            HttpStatus.BAD_REQUEST),
+    SKILL_NOT_EXIST("SKILL_NOT_EXIST", "Kỹ năng không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST)
     ;
     String code;
     String message;
