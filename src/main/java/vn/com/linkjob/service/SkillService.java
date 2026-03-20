@@ -18,6 +18,7 @@ import vn.com.linkjob.mapper.SkillMapper;
 import vn.com.linkjob.repository.SkillRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -58,5 +59,9 @@ public class SkillService {
         skill.setName(request.getName());
 
         return skillMapper.toSkillResponseDTO(skillRepository.save(skill));
+    }
+
+    public Optional<Skill> getSkillById(long id) {
+        return skillRepository.findById(id);
     }
 }

@@ -34,7 +34,7 @@ public class Job extends Auditable {
     @JoinColumn(name = "company_id")
     Company company;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnoreProperties(value = {"jobs"})
     @JoinTable(name = "job_skill",
             joinColumns = @JoinColumn(name = "job_id"),
