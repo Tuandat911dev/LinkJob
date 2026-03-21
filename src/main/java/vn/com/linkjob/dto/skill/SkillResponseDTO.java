@@ -12,6 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SkillResponseDTO {
+    long id;
     String name;
     Instant createdAt;
     Instant updatedAt;
