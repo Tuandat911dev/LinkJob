@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobResponseDTO {
+    long id;
     String name;
     double salary;
     int quantity;
