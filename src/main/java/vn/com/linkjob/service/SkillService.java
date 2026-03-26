@@ -64,4 +64,16 @@ public class SkillService {
     public Optional<Skill> getSkillById(long id) {
         return skillRepository.findById(id);
     }
+
+    public void deleteSkill(long id) {
+        Skill skill = skillRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.SKILL_NOT_EXIST)
+        );
+
+        try {
+            skillRepository.delete(skill);
+        } catch (Exception e) {
+            throw new AppException(ErrorCode.SKILL_IN_USE);
+        }
+    }
 }

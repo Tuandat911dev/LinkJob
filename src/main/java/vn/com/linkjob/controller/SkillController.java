@@ -42,15 +42,15 @@ public class SkillController {
                 .body(skillService.updateSkill(request));
     }
 
-//    @DeleteMapping("/{id}")
-//    @ApiMessage("delete skill")
-//    public ResponseEntity<Void> deleteSkill(@PathVariable long id) {
-//        skillService.deleteSkill(id);
-//
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .build();
-//    }
+    @DeleteMapping("/{id}")
+    @ApiMessage("delete skill")
+    public ResponseEntity<Void> deleteSkill(@PathVariable long id) {
+        skillService.deleteSkill(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 
     @GetMapping
     @ApiMessage("get skill with paginate, sort, filter")

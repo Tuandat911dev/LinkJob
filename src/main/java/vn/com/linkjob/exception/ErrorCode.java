@@ -33,7 +33,8 @@ public enum ErrorCode {
     // skill
     SKILL_EXISTED("SKILL_EXISTED", "Kỹ năng đã tồn tại trong hệ thống, vui lòng chọn kỹ năng có sẵn",
             HttpStatus.BAD_REQUEST),
-    SKILL_NOT_EXIST("SKILL_NOT_EXIST", "Kỹ năng không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST)
+    SKILL_NOT_EXIST("SKILL_NOT_EXIST", "Kỹ năng không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
+    SKILL_IN_USE("SKILL_IN_USE", "Kỹ năng đang được sử dụng, không thể xóa", HttpStatus.BAD_REQUEST),
     ;
     String code;
     String message;
