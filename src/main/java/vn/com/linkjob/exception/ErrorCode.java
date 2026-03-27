@@ -29,6 +29,7 @@ public enum ErrorCode {
 
     // job
     JOB_LEVEL_INVALID("JOB_LEVEL_INVALID", "Level công việc không hợp lệ", HttpStatus.BAD_REQUEST),
+    JOB_NOT_EXIST("JOB_NOT_EXIST", "Công việc này chưa tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
 
     // skill
     SKILL_EXISTED("SKILL_EXISTED", "Kỹ năng đã tồn tại trong hệ thống, vui lòng chọn kỹ năng có sẵn",

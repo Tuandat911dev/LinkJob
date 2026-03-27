@@ -1,8 +1,13 @@
 package vn.com.linkjob.dto.job;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import vn.com.linkjob.util.enums.JobLevelEnum;
+
+import java.time.Instant;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -11,8 +16,44 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateJobRequestDTO {
-    @NotBlank(message = "Skill id không được để trống")
-    long id;
-    @NotBlank(message = "Tên skill không được để trống")
+    @NotNull(message = "Mã công việc không được để trống")
+    Long jobId;
+
+    @NotBlank(message = "Tên công việc không được để trống")
     String name;
+
+    @Positive(message = "Lương phải lớn hơn 0")
+    double salary;
+
+    @Min(value = 1, message = "Số lượng tuyển dụng ít nhất là 1")
+    int quantity;
+
+    @NotNull(message = "Trình độ (level) là bắt buộc")
+    JobLevelEnum level;
+
+    @NotNull(message = "Ngày bắt đầu không được để trống")
+    @FutureOrPresent(message = "Ngày bắt đầu không được là ngày quá khứ")
+    Instant startDate;
+
+    @NotNull(message = "Ngày kết thúc không được để trống")
+    Instant endDate;
+
+    boolean active;
+
+    @NotNull(message = "ID công ty không được để trống")
+    long companyId;
+
+    CreateJobRequestDTO.CreateJobSkillDTO skills;
+
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CreateJobSkillDTO {
+        @Valid
+        @NotNull(message = "Danh sách kỹ năng không được để trống")
+        List<Long> skillId;
+    }
 }

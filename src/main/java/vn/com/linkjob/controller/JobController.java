@@ -6,12 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.dto.job.CreateJobRequestDTO;
 import vn.com.linkjob.dto.job.JobResponseDTO;
+import vn.com.linkjob.dto.job.UpdateJobRequestDTO;
 import vn.com.linkjob.service.JobService;
 
 @RestController
@@ -26,5 +24,12 @@ public class JobController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(jobService.createJob(request));
+    }
+
+    @PutMapping
+    public ResponseEntity<JobResponseDTO> updateJob(@Valid @RequestBody UpdateJobRequestDTO requestDTO) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(jobService.updateJob(requestDTO));
     }
 }

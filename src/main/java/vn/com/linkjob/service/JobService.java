@@ -9,6 +9,9 @@ import vn.com.linkjob.domain.Job;
 import vn.com.linkjob.domain.Skill;
 import vn.com.linkjob.dto.job.CreateJobRequestDTO;
 import vn.com.linkjob.dto.job.JobResponseDTO;
+import vn.com.linkjob.dto.job.UpdateJobRequestDTO;
+import vn.com.linkjob.exception.AppException;
+import vn.com.linkjob.exception.ErrorCode;
 import vn.com.linkjob.mapper.JobMapper;
 import vn.com.linkjob.repository.JobRepository;
 
@@ -25,22 +28,34 @@ public class JobService {
     CompanyService companyService;
     SkillService skillService;
 
-    public JobResponseDTO createJob(CreateJobRequestDTO request) {
-        Company company = companyService.getCompanyById(request.getCompanyId());
+    private void updateCommonData(Job currentJob, long companyId, List<Long> skillIds) {
         List<Skill> skills = new ArrayList<>();
-
-        Job newJob = jobMapper.toJob(request);
-
+        Company company = companyService.getCompanyById(companyId);
         if (company != null) {
-            newJob.setCompany(company);
+            currentJob.setCompany(company);
         }
 
-        for (long skillId : request.getSkills().getSkillId()) {
+        for (long skillId : skillIds) {
             Optional<Skill> skill = skillService.getSkillById(skillId);
             skill.ifPresent(skills::add);
         }
 
-        newJob.setSkills(skills);
+        currentJob.setSkills(skills);
+    }
+
+    public JobResponseDTO createJob(CreateJobRequestDTO request) {
+        Job newJob = jobMapper.toJob(request);
+        updateCommonData(newJob, request.getCompanyId(), request.getSkills().getSkillId());
+
+        return jobMapper.toJobResponseDTO(jobRepository.save(newJob));
+    }
+
+    public JobResponseDTO updateJob(UpdateJobRequestDTO request) {
+        Job newJob = jobRepository.findById(request.getJobId()).orElseThrow(
+                () -> new AppException(ErrorCode.JOB_NOT_EXIST)
+        );
+        jobMapper.updateJob(newJob, request);
+        updateCommonData(newJob, request.getCompanyId(), request.getSkills().getSkillId());
 
         return jobMapper.toJobResponseDTO(jobRepository.save(newJob));
     }
