@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "skilss")
+@Table(name = "skills")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

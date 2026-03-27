@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UpdateJobRequestDTO {
     @NotNull(message = "Mã công việc không được để trống")
-    Long jobId;
+    Long id;
 
     @NotBlank(message = "Tên công việc không được để trống")
     String name;

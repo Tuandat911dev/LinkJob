@@ -55,13 +55,13 @@ public class JobService {
     }
 
     public JobResponseDTO updateJob(UpdateJobRequestDTO request) {
-        Job newJob = jobRepository.findById(request.getJobId()).orElseThrow(
+        Job currentJob = jobRepository.findById(request.getId()).orElseThrow(
                 () -> new AppException(ErrorCode.JOB_NOT_EXIST)
         );
-        jobMapper.updateJob(newJob, request);
-        updateCommonData(newJob, request.getCompanyId(), request.getSkills().getSkillId());
+        jobMapper.updateJob(currentJob, request);
+        updateCommonData(currentJob, request.getCompanyId(), request.getSkills().getSkillId());
 
-        return jobMapper.toJobResponseDTO(jobRepository.save(newJob));
+        return jobMapper.toJobResponseDTO(jobRepository.save(currentJob));
     }
 
     public ResultPaginationDTO getJobsWithPagination(Pageable pageable, Specification<Job> spec) {
