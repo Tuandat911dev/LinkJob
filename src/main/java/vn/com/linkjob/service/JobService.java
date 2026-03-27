@@ -3,6 +3,9 @@ package vn.com.linkjob.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.domain.Job;
@@ -10,6 +13,7 @@ import vn.com.linkjob.domain.Skill;
 import vn.com.linkjob.dto.job.CreateJobRequestDTO;
 import vn.com.linkjob.dto.job.JobResponseDTO;
 import vn.com.linkjob.dto.job.UpdateJobRequestDTO;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
 import vn.com.linkjob.mapper.JobMapper;
@@ -58,5 +62,22 @@ public class JobService {
         updateCommonData(newJob, request.getCompanyId(), request.getSkills().getSkillId());
 
         return jobMapper.toJobResponseDTO(jobRepository.save(newJob));
+    }
+
+    public ResultPaginationDTO getJobsWithPagination(Pageable pageable, Specification<Job> spec) {
+        Page<Job> jobPage = jobRepository.findAll(spec, pageable);
+        List<JobResponseDTO> jobs = jobPage.getContent().stream()
+                .map(jobMapper::toJobResponseDTO)
+                .toList();
+
+        return ResultPaginationDTO.builder()
+                .meta(ResultPaginationDTO.Meta.builder()
+                        .pageSize(jobPage.getSize())
+                        .page(jobPage.getNumber() + 1)
+                        .total(jobPage.getTotalElements())
+                        .pages(jobPage.getTotalPages())
+                        .build())
+                .result(jobs)
+                .build();
     }
 }
