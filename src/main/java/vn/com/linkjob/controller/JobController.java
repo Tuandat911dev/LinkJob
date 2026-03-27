@@ -46,4 +46,12 @@ public class JobController {
                 .status(HttpStatus.OK)
                 .body(jobService.getJobsWithPagination(pageable, spec));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteJob(@PathVariable long id) {
+        jobService.deleteJob(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 }

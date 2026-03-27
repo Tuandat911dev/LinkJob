@@ -80,4 +80,12 @@ public class JobService {
                 .result(jobs)
                 .build();
     }
+
+    public void deleteJob(long id) {
+        Job currentJob = jobRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.JOB_NOT_EXIST)
+        );
+
+        jobRepository.delete(currentJob);
+    }
 }
