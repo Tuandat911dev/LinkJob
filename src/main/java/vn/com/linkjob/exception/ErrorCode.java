@@ -36,6 +36,12 @@ public enum ErrorCode {
             HttpStatus.BAD_REQUEST),
     SKILL_NOT_EXIST("SKILL_NOT_EXIST", "Kỹ năng không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
     SKILL_IN_USE("SKILL_IN_USE", "Kỹ năng đang được sử dụng, không thể xóa", HttpStatus.BAD_REQUEST),
+
+    // file
+    FILE_EXTENSION_INVALID("FILE_EXTENSION_INVALID", "Định dạng file không hợp lệ, chấp nhận pdf, jpg, jpeg, png, " +
+            "doc, docx", HttpStatus.BAD_REQUEST),
+    FILE_NOT_EMPTY("FILE_NOT_EMPTY", "File không được để trống", HttpStatus.BAD_REQUEST),
+    FILE_TOO_LARGE("FILE_TOO_LARGE", "Dung lượng file quá lớn, chấp nhận dưới 50MB", HttpStatus.BAD_REQUEST)
     ;
     String code;
     String message;
