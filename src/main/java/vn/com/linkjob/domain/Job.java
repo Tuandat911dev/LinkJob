@@ -1,5 +1,6 @@
 package vn.com.linkjob.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,4 +41,9 @@ public class Job extends Auditable {
             joinColumns = @JoinColumn(name = "job_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
     List<Skill> skills;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "job")
+    @JsonIgnore
+    List<Resume> resumes;
 }

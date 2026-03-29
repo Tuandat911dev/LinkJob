@@ -1,9 +1,12 @@
 package vn.com.linkjob.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.com.linkjob.util.enums.GenderEnum;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -30,4 +33,9 @@ public class User extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     Company company;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "user")
+    @JsonIgnore
+    List<Resume> resumes;
 }

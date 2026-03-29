@@ -41,7 +41,10 @@ public enum ErrorCode {
     FILE_EXTENSION_INVALID("FILE_EXTENSION_INVALID", "Định dạng file không hợp lệ, chấp nhận pdf, jpg, jpeg, png, " +
             "doc, docx", HttpStatus.BAD_REQUEST),
     FILE_NOT_EMPTY("FILE_NOT_EMPTY", "File không được để trống", HttpStatus.BAD_REQUEST),
-    FILE_TOO_LARGE("FILE_TOO_LARGE", "Dung lượng file quá lớn, chấp nhận dưới 50MB", HttpStatus.BAD_REQUEST)
+    FILE_TOO_LARGE("FILE_TOO_LARGE", "Dung lượng file quá lớn, chấp nhận dưới 50MB", HttpStatus.BAD_REQUEST),
+
+    // resume
+    RESUME_STATUS_INVALID("RESUME_STATUS_INVALID", "Trạng thái CV không hợp lệ", HttpStatus.BAD_REQUEST)
     ;
     String code;
     String message;
