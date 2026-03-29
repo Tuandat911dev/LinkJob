@@ -1,12 +1,15 @@
 package vn.com.linkjob.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import vn.com.linkjob.dto.file.DownloadFileResDTO;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -69,5 +72,17 @@ public class FileService {
         }
 
         return finalName;
+    }
+
+    public DownloadFileResDTO downloadFile(String fileName, String folder) throws URISyntaxException, IOException {
+        URI uri = new URI(baseURI + folder + "/" + fileName);
+        Path path = Paths.get(uri);
+        File file = new File(path.toString());
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return DownloadFileResDTO.builder()
+                .fileLength(file.length())
+                .resource(resource)
+                .build();
     }
 }

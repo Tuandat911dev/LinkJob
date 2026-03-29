@@ -33,6 +33,9 @@ public class FormatRestResponse implements ResponseBodyAdvice<Object> {
             ServerHttpRequest request,
             ServerHttpResponse response) {
         HttpServletResponse servletResponse = ((ServletServerHttpResponse) response).getServletResponse();
+        if (body instanceof org.springframework.core.io.Resource || body instanceof byte[]) {
+            return body;
+        }
 
         int status = servletResponse.getStatus();
         RestResponse<Object> restResponse = null;
