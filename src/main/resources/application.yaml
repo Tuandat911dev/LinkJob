@@ -16,7 +16,7 @@ spring:
 
 app:
   upload-file:
-    base-path: file:///D:/Workspace/Learn/Software/Spring/restful/upload/
+    base-uri: file:///D:/Workspace/Learn/Software/Spring/restful/upload/
 
 # config jwt
 security:
