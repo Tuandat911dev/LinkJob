@@ -9,6 +9,14 @@ spring:
     redis:
       host: localhost
       port: 6379
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+app:
+  upload-file:
+    base-path: file:///D:/Workspace/Learn/Software/Spring/restful/upload/
 
 # config jwt
 security:

@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                        .requestMatchers("/storage/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtBlackListFilter, BearerTokenAuthenticationFilter.class)
