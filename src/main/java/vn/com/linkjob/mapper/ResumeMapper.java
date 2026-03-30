@@ -15,5 +15,6 @@ public interface ResumeMapper {
 
     @Mapping(source = "resume.user", target = "user")
     @Mapping(source = "resume.job", target = "job")
+    @Mapping(source = "resume.job.company.name", target = "companyName")
     ResumeResDTO toResumeResDTO(Resume resume);
 }

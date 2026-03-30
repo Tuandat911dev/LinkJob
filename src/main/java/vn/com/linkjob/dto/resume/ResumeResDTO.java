@@ -22,6 +22,7 @@ public class ResumeResDTO {
     String updatedBy;
     UserResumeDTO user;
     JobResumeDTO job;
+    String companyName;
 
     @FieldDefaults(level = AccessLevel.PRIVATE)
     @Getter
