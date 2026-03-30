@@ -9,6 +9,8 @@ import vn.com.linkjob.domain.Resume;
 import vn.com.linkjob.domain.User;
 import vn.com.linkjob.dto.resume.CreateResumeDTO;
 import vn.com.linkjob.dto.resume.CreateResumeResDTO;
+import vn.com.linkjob.dto.resume.UpdateResumeDTO;
+import vn.com.linkjob.dto.resume.UpdateResumeResDTO;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
 import vn.com.linkjob.mapper.ResumeMapper;
@@ -39,5 +41,19 @@ public class ResumeService {
         newResume.setJob(job);
 
         return resumeMapper.toCreateResumeResponseDTO(resumeRepository.save(newResume));
+    }
+
+    public UpdateResumeResDTO updateResume(UpdateResumeDTO request) {
+        Resume currentResume = resumeRepository.findById(request.getId()).orElseThrow(
+                () -> new AppException(ErrorCode.RESUME_NOT_EXIST)
+        );
+
+        currentResume.setStatus(request.getStatus());
+        Resume updatedResume = resumeRepository.save(currentResume);
+
+        return UpdateResumeResDTO.builder()
+                .createdAt(updatedResume.getCreatedAt())
+                .createdBy(updatedResume.getCreatedBy())
+                .build();
     }
 }

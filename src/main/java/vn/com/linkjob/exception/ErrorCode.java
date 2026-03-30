@@ -44,7 +44,8 @@ public enum ErrorCode {
     FILE_TOO_LARGE("FILE_TOO_LARGE", "Dung lượng file quá lớn, chấp nhận dưới 50MB", HttpStatus.BAD_REQUEST),
 
     // resume
-    RESUME_STATUS_INVALID("RESUME_STATUS_INVALID", "Trạng thái CV không hợp lệ", HttpStatus.BAD_REQUEST)
+    RESUME_STATUS_INVALID("RESUME_STATUS_INVALID", "Trạng thái CV không hợp lệ", HttpStatus.BAD_REQUEST),
+    RESUME_NOT_EXIST("RESUME_NOT_EXIST", "CV không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST)
     ;
     String code;
     String message;
