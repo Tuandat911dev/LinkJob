@@ -3,10 +3,14 @@ package vn.com.linkjob.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.Job;
 import vn.com.linkjob.domain.Resume;
 import vn.com.linkjob.domain.User;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.dto.resume.*;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
@@ -14,6 +18,8 @@ import vn.com.linkjob.mapper.ResumeMapper;
 import vn.com.linkjob.repository.JobRepository;
 import vn.com.linkjob.repository.ResumeRepository;
 import vn.com.linkjob.repository.UserRepository;
+
+import java.util.List;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -68,5 +74,22 @@ public class ResumeService {
         );
 
         return resumeMapper.toResumeResDTO(currentResume);
+    }
+
+    public ResultPaginationDTO getResumesWithPaginate(Pageable pageable, Specification<Resume> spec) {
+        Page<Resume> resumes = resumeRepository.findAll(spec, pageable);
+        List<ResumeResDTO> result = resumes.getContent().stream()
+                .map(resumeMapper::toResumeResDTO)
+                .toList();
+
+        return ResultPaginationDTO.builder()
+                .meta(ResultPaginationDTO.Meta.builder()
+                        .pageSize(resumes.getSize())
+                        .page(resumes.getNumber() + 1)
+                        .total(resumes.getTotalElements())
+                        .pages(resumes.getTotalPages())
+                        .build())
+                .result(result)
+                .build();
     }
 }

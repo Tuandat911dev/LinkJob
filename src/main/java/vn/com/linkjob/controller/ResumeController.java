@@ -1,12 +1,17 @@
 package vn.com.linkjob.controller;
 
+import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.com.linkjob.domain.Resume;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.dto.resume.*;
 import vn.com.linkjob.service.ResumeService;
 import vn.com.linkjob.util.annotation.ApiMessage;
@@ -44,5 +49,14 @@ public class ResumeController {
     public ResponseEntity<ResumeResDTO> getResumeById(@PathVariable("id") long id) {
         return ResponseEntity.ok()
                 .body(resumeService.getResumeById(id));
+    }
+
+    @GetMapping
+    @ApiMessage("Get resumes with pagination")
+    public ResponseEntity<ResultPaginationDTO> getResumesWithPagination(Pageable pageable,
+                                                                        @Filter Specification<Resume> spec) {
+        return ResponseEntity
+                .ok()
+                .body(resumeService.getResumesWithPaginate(pageable, spec));
     }
 }
