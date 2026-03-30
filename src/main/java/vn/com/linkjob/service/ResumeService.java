@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.Job;
 import vn.com.linkjob.domain.Resume;
 import vn.com.linkjob.domain.User;
-import vn.com.linkjob.dto.resume.CreateResumeDTO;
-import vn.com.linkjob.dto.resume.CreateResumeResDTO;
-import vn.com.linkjob.dto.resume.UpdateResumeDTO;
-import vn.com.linkjob.dto.resume.UpdateResumeResDTO;
+import vn.com.linkjob.dto.resume.*;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
 import vn.com.linkjob.mapper.ResumeMapper;
@@ -63,5 +60,13 @@ public class ResumeService {
         );
 
         resumeRepository.delete(currentResume);
+    }
+
+    public ResumeResDTO getResumeById(long id) {
+        Resume currentResume = resumeRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.RESUME_NOT_EXIST)
+        );
+
+        return resumeMapper.toResumeResDTO(currentResume);
     }
 }

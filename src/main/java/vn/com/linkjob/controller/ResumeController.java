@@ -7,10 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.com.linkjob.dto.resume.CreateResumeDTO;
-import vn.com.linkjob.dto.resume.CreateResumeResDTO;
-import vn.com.linkjob.dto.resume.UpdateResumeDTO;
-import vn.com.linkjob.dto.resume.UpdateResumeResDTO;
+import vn.com.linkjob.dto.resume.*;
 import vn.com.linkjob.service.ResumeService;
 import vn.com.linkjob.util.annotation.ApiMessage;
 
@@ -40,5 +37,12 @@ public class ResumeController {
         resumeService.deleteResume(id);
         return ResponseEntity.ok()
                 .build();
+    }
+
+    @GetMapping("/{id}")
+    @ApiMessage("Get resume by id")
+    public ResponseEntity<ResumeResDTO> getResumeById(@PathVariable("id") long id) {
+        return ResponseEntity.ok()
+                .body(resumeService.getResumeById(id));
     }
 }
