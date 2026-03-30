@@ -33,4 +33,12 @@ public class ResumeController {
         return ResponseEntity.ok()
                 .body(resumeService.updateResume(request));
     }
+
+    @DeleteMapping("/{id}")
+    @ApiMessage("Delete Resume")
+    public ResponseEntity<Void> deleteResume(@PathVariable("id") long id) {
+        resumeService.deleteResume(id);
+        return ResponseEntity.ok()
+                .build();
+    }
 }

@@ -56,4 +56,12 @@ public class ResumeService {
                 .createdBy(updatedResume.getCreatedBy())
                 .build();
     }
+
+    public void deleteResume(long id) {
+        Resume currentResume = resumeRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.RESUME_NOT_EXIST)
+        );
+
+        resumeRepository.delete(currentResume);
+    }
 }
