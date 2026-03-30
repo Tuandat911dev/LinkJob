@@ -88,4 +88,12 @@ public class JobService {
 
         jobRepository.delete(currentJob);
     }
+
+    public JobResponseDTO getJobById(long id) {
+        Job currentJob = jobRepository.findById(id).orElseThrow(
+                () -> new AppException(ErrorCode.JOB_NOT_EXIST)
+        );
+
+        return jobMapper.toJobResponseDTO(currentJob);
+    }
 }

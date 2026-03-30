@@ -47,6 +47,13 @@ public class JobController {
                 .body(jobService.getJobsWithPagination(pageable, spec));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<JobResponseDTO> getJobById(@PathVariable("id") long id) {
+        return ResponseEntity
+                .ok()
+                .body(jobService.getJobById(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJob(@PathVariable long id) {
         jobService.deleteJob(id);
