@@ -18,6 +18,7 @@ public class Resume extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String email;
+    String url;
 
     @Enumerated(EnumType.STRING)
     ResumeStatusEnum status;
