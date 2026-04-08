@@ -37,8 +37,8 @@ public class CompanyService {
         return companyMapper.toCompanyResponseDTO(newCompany);
     }
 
-    public CompanyResponseDTO updateCompany(long id, CompanyRequestDTO request) {
-        Company company = companyRepository.findById(id).orElseThrow(
+    public CompanyResponseDTO updateCompany(CompanyUpdateRequestDTO request) {
+        Company company = companyRepository.findById(request.getId()).orElseThrow(
                 () -> new AppException(ErrorCode.COMPANY_NOT_EXIST)
         );
         companyMapper.updateCompany(company, request);

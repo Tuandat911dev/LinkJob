@@ -5,6 +5,7 @@ import org.mapstruct.MappingTarget;
 import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
+import vn.com.linkjob.dto.company.CompanyUpdateRequestDTO;
 
 @Mapper(componentModel = "spring")
 public interface CompanyMapper {
@@ -12,5 +13,5 @@ public interface CompanyMapper {
 
     CompanyResponseDTO toCompanyResponseDTO(Company company);
 
-    void updateCompany(@MappingTarget Company company, CompanyRequestDTO request);
+    void updateCompany(@MappingTarget Company company, CompanyUpdateRequestDTO request);
 }

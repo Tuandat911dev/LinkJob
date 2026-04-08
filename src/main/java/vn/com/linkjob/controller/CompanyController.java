@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
+import vn.com.linkjob.dto.company.CompanyUpdateRequestDTO;
 import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.service.CompanyService;
 import vn.com.linkjob.util.annotation.ApiMessage;
@@ -32,13 +33,12 @@ public class CompanyController {
                 .body(companyService.createCompany(request));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @ApiMessage("edit company")
-    public ResponseEntity<CompanyResponseDTO> updateCompany(@PathVariable long id,
-                                                            @RequestBody CompanyRequestDTO request) {
+    public ResponseEntity<CompanyResponseDTO> updateCompany(@RequestBody CompanyUpdateRequestDTO request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(companyService.updateCompany(id, request));
+                .body(companyService.updateCompany(request));
     }
 
     @DeleteMapping("/{id}")
