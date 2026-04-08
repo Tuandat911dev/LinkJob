@@ -1,11 +1,17 @@
 package vn.com.linkjob.controller;
 
+import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.com.linkjob.domain.Permission;
+import vn.com.linkjob.domain.Resume;
+import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.dto.permission.PermissionCreateRequestDTO;
 import vn.com.linkjob.dto.permission.PermissionResponseDTO;
 import vn.com.linkjob.dto.permission.PermissionUpdateRequest;
@@ -34,5 +40,15 @@ public class PermissionController {
         return ResponseEntity
                 .ok()
                 .body(permissionService.updatePermission(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<ResultPaginationDTO> getPermissionsWithPaginate(
+            Pageable pageable,
+            @Filter Specification<Permission> spec
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(permissionService.getPermissionsWithPaginate(pageable, spec));
     }
 }
