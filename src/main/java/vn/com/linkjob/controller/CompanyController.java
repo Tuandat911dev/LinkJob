@@ -59,4 +59,12 @@ public class CompanyController {
                 .status(HttpStatus.OK)
                 .body(companyService.getCompaniesWithPaginate(pageable, spec));
     }
+
+    @GetMapping("/{id}")
+    @ApiMessage("get company by id")
+    public ResponseEntity<CompanyResponseDTO> getCompanyById(@PathVariable("id") long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(companyService.getCompanyByIdApi(id));
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.com.linkjob.domain.Company;
 import vn.com.linkjob.dto.company.CompanyRequestDTO;
 import vn.com.linkjob.dto.company.CompanyResponseDTO;
+import vn.com.linkjob.dto.company.CompanyUpdateRequestDTO;
 import vn.com.linkjob.dto.paginate.ResultPaginationDTO;
 import vn.com.linkjob.exception.AppException;
 import vn.com.linkjob.exception.ErrorCode;
@@ -29,6 +30,10 @@ public class CompanyService {
         return companyRepository.findById(id).orElseThrow(
                 () -> new AppException(ErrorCode.COMPANY_NOT_EXIST)
         );
+    }
+
+    public CompanyResponseDTO getCompanyByIdApi(long id) {
+        return companyMapper.toCompanyResponseDTO(getCompanyById(id));
     }
 
     public CompanyResponseDTO createCompany(CompanyRequestDTO request) {
