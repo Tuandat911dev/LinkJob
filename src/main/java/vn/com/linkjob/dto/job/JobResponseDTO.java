@@ -23,6 +23,8 @@ public class JobResponseDTO {
     Instant endDate;
     boolean active;
     String company;
+    String description;
+    String location;
     List<JobSkillResponseDTO> skills;
 
     @FieldDefaults(level = AccessLevel.PRIVATE)

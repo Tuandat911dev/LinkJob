@@ -21,6 +21,12 @@ public class CreateJobRequestDTO {
     @NotBlank(message = "Tên công việc không được để trống")
     String name;
 
+    @NotBlank(message = "Vị trí không được để trống")
+    String location;
+
+    @NotBlank(message = "Mô tả không được để trống")
+    String description;
+
     @Positive(message = "Lương phải lớn hơn 0")
     double salary;
 

@@ -23,10 +23,13 @@ public class Job extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String name;
+    String location;
     double salary;
     int quantity;
     @Enumerated(EnumType.STRING)
     JobLevelEnum level;
+    @Column(columnDefinition = "TEXT")
+    String description;
     Instant startDate;
     Instant endDate;
     boolean active;
