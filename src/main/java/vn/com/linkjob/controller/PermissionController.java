@@ -5,12 +5,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.dto.permission.PermissionCreateRequestDTO;
 import vn.com.linkjob.dto.permission.PermissionResponseDTO;
+import vn.com.linkjob.dto.permission.PermissionUpdateRequest;
 import vn.com.linkjob.service.PermissionService;
 
 @RestController
@@ -27,5 +25,14 @@ public class PermissionController {
         return ResponseEntity
                 .ok()
                 .body(permissionService.createPermission(request));
+    }
+
+    @PutMapping
+    public ResponseEntity<PermissionResponseDTO> updatePermission(
+            @Valid @RequestBody PermissionUpdateRequest request
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(permissionService.updatePermission(request));
     }
 }

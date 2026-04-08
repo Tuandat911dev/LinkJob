@@ -45,7 +45,10 @@ public enum ErrorCode {
 
     // resume
     RESUME_STATUS_INVALID("RESUME_STATUS_INVALID", "Trạng thái CV không hợp lệ", HttpStatus.BAD_REQUEST),
-    RESUME_NOT_EXIST("RESUME_NOT_EXIST", "CV không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST)
+    RESUME_NOT_EXIST("RESUME_NOT_EXIST", "CV không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
+
+    // permission
+    PERMISSION_NOT_EXIST("PERMISSION_NOT_EXIST", "Quyền không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST)
     ;
     String code;
     String message;
