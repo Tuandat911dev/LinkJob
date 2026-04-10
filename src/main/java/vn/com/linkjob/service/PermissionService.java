@@ -18,6 +18,7 @@ import vn.com.linkjob.mapper.PermissionMapper;
 import vn.com.linkjob.repository.PermissionRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -58,5 +59,9 @@ public class PermissionService {
                         .build())
                 .result(result)
                 .build();
+    }
+
+    public Optional<Permission> getPermissionById(long id) {
+        return permissionRepository.findById(id);
     }
 }
