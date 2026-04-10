@@ -48,7 +48,10 @@ public enum ErrorCode {
     RESUME_NOT_EXIST("RESUME_NOT_EXIST", "CV không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
 
     // permission
-    PERMISSION_NOT_EXIST("PERMISSION_NOT_EXIST", "Quyền không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST)
+    PERMISSION_NOT_EXIST("PERMISSION_NOT_EXIST", "Quyền không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST),
+
+    // role
+    ROLE_NOT_EXIST("ROLE_NOT_EXIST", "Vai trò không tồn tại trong hệ thống", HttpStatus.BAD_REQUEST)
     ;
     String code;
     String message;

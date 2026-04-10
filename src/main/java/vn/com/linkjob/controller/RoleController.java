@@ -5,12 +5,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.dto.role.RoleCreateRequestDTO;
 import vn.com.linkjob.dto.role.RoleResponseDTO;
+import vn.com.linkjob.dto.role.RoleUpdateRequestDTO;
 import vn.com.linkjob.service.RoleService;
 
 @RestController
@@ -23,5 +21,10 @@ public class RoleController {
     @PostMapping
     public ResponseEntity<RoleResponseDTO> createRole(@Valid @RequestBody RoleCreateRequestDTO request) {
         return ResponseEntity.ok(roleService.createRole(request));
+    }
+
+    @PutMapping
+    public ResponseEntity<RoleResponseDTO> updateRole(@Valid @RequestBody RoleUpdateRequestDTO request) {
+        return ResponseEntity.ok(roleService.updateRole(request));
     }
 }
