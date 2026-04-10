@@ -22,10 +22,10 @@ public class JobResponseDTO {
     Instant startDate;
     Instant endDate;
     boolean active;
-    String company;
     String description;
     String location;
     List<JobSkillResponseDTO> skills;
+    JobCompanyResponseDTO company;
 
     @FieldDefaults(level = AccessLevel.PRIVATE)
     @Getter
@@ -36,6 +36,18 @@ public class JobResponseDTO {
     public static class JobSkillResponseDTO {
         long id;
         String name;
+    }
+
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class JobCompanyResponseDTO {
+        long id;
+        String name;
+        String logo;
     }
 
     Instant createdAt;

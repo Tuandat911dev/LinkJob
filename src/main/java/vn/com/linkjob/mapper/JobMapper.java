@@ -13,7 +13,7 @@ public interface JobMapper {
     @Mapping(target = "skills", ignore = true)
     Job toJob(CreateJobRequestDTO request);
 
-    @Mapping(source = "company.name", target = "company")
+    @Mapping(source = "company", target = "company")
     @Mapping(source = "skills", target = "skills")
     JobResponseDTO toJobResponseDTO(Job user);
 
