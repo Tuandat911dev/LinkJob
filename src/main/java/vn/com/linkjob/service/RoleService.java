@@ -52,4 +52,10 @@ public class RoleService {
 
         return roleMapper.toRoleResponseDTO(currentRole);
     }
+
+    public void deleteRole(Long id) {
+        Role currentRole = roleRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_EXIST));
+        roleRepository.delete(currentRole);
+    }
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.com.linkjob.dto.role.RoleCreateRequestDTO;
@@ -26,5 +27,14 @@ public class RoleController {
     @PutMapping
     public ResponseEntity<RoleResponseDTO> updateRole(@Valid @RequestBody RoleUpdateRequestDTO request) {
         return ResponseEntity.ok(roleService.updateRole(request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRole(@PathVariable Long id) {
+        roleService.deleteRole(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 }
